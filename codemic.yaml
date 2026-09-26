@@ -1,0 +1,19 @@
+workflows:
+  expo-android-apk:
+    name: Namaz Wagtlary APK Oluşturucu
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    environment:
+      node: 18.x
+    scripts:
+      - name: Bağımlılıkları Yükle
+        script: |
+          npm install -g eas-cli
+          npm install
+      - name: Expo Prebuild ve APK Derleme
+        script: |
+          npx expo prebuild --platform android
+          cd android && ./gradlew assembleRelease
+    artifacts:
+      - android/app/build/outputs/apk/release/*.apk
+      
